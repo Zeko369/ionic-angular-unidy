@@ -10,14 +10,12 @@ import { lastValueFrom } from 'rxjs';
   templateUrl: './oauth-callback.page.html',
   styleUrls: ['./oauth-callback.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule],
 })
 export class OauthCallbackPage implements OnInit {
-
   private oidcSecurityService = inject(OidcSecurityService);
 
   async ngOnInit() {
-
     // This will redirect back to home
     const request = this.oidcSecurityService.checkAuth();
     const response = await lastValueFrom(request);
@@ -27,10 +25,7 @@ export class OauthCallbackPage implements OnInit {
       alert(response.errorMessage);
     } else {
       console.log(response);
-      alert("SUCCESS:\n" + JSON.stringify(response, null, 2));
+      alert('SUCCESS:\n' + JSON.stringify(response, null, 2));
     }
-
-
   }
-
 }
