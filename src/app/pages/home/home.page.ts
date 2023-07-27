@@ -17,23 +17,24 @@ export class HomePage implements OnInit {
   data = JSON.stringify({ oidcHost, redirectHost, unidyClientID }, null, 2);
 
   ngOnInit() {
-    this.oidcSecurityService.checkAuth().subscribe(async (loginResponse) => {
-      console.log('so we subbed here', loginResponse);
+    this.oidcSecurityService
+      .checkAuthIncludingServer()
+      .subscribe(async (loginResponse) => {
+        console.log('so we subbed here', loginResponse);
 
-      if (!loginResponse.isAuthenticated) {
-        // const token = await lastValueFrom(
-        //   this.oidcSecurityService.getRefreshToken(),
-        // );
-        // if (!token) {
-        //   console.log('no token, so we login');
-        //   return;
-        // }
-
-        await this.oidcSecurityService
-          .forceRefreshSession()
-          .forEach((x) => console.log('refetch thingy', x));
-      }
-    });
+        if (!loginResponse.isAuthenticated) {
+          // const token = await lastValueFrom(
+          //   this.oidcSecurityService.getRefreshToken(),
+          // );
+          // if (!token) {
+          //   console.log('no token, so we login');
+          //   return;
+          // }
+          // await this.oidcSecurityService
+          //   .forceRefreshSession()
+          //   .forEach((x) => console.log('refetch thingy', x));
+        }
+      });
 
     lastValueFrom(this.oidcSecurityService.getAccessToken())
       .then((token) =>
