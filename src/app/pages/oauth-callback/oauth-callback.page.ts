@@ -4,13 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { lastValueFrom } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-oauth-callback',
   templateUrl: './oauth-callback.page.html',
   styleUrls: ['./oauth-callback.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [IonicModule, CommonModule, FormsModule, RouterLink],
 })
 export class OauthCallbackPage implements OnInit {
   private oidcSecurityService = inject(OidcSecurityService);

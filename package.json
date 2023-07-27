@@ -5,7 +5,7 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
-    "dev:server": "yarn ionic serve --nobrowser",
+    "dev:server": "yarn ionic serve --no-open",
     "dev:cf": "cloudflared tunnel --url http://localhost:8100",
     "dev": "concurrently \"yarn dev:server\" \"yarn dev:cf\"",
     "start": "ng serve",

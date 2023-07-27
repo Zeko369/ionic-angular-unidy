@@ -3,13 +3,19 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { AuthModule, LogLevel } from 'angular-auth-oidc-client';
+import {
+  AbstractSecurityStorage,
+  AuthModule,
+  LogLevel,
+} from 'angular-auth-oidc-client';
+import { MyStorageService } from 'src/storage-service.module';
 
-// TESTGING FOOBAR
-// const oidcHost = 'https://firewall-ethical-three-tennessee.trycloudflare.com';
-const oidcHost = 'https://villages-stupid-themes-cisco.trycloudflare.com';
-const redirectHost = 'https://implementing-edit-islands-ctrl.trycloudflare.com';
-const unidyClientID = 'ghDs--eUbxzRdCu2VeslQvqnHYjURmc6VdKMoLHnC0E';
+// const SCOPE = 'openid';
+const SCOPE = 'openid profile email';
+
+// const oidcHost = 'https://closest-rehab-employ-pda.trycloudflare.com';
+// const redirectHost = 'https://pierre-wagner-advances-pendant.trycloudflare.com';
+// const unidyClientID = 'o0FoMPAcHS5JiP8lQQ__0yeWCZqiEpRcBxiTHRLB5qo';
 
 // ----------------------------------------------
 
@@ -25,9 +31,9 @@ const unidyClientID = 'ghDs--eUbxzRdCu2VeslQvqnHYjURmc6VdKMoLHnC0E';
 //   'https://regardless-melissa-behalf-henderson.trycloudflare.com';
 // const unidyClientID = 'Zqw5QDa_6xD9llHEIsrY9VmNJfEfhumRyAwOjTQ0zbk';
 
-// const oidcHost = 'https://btc-echo.staging.unidy.de';
-// const redirectHost = 'https://btc-echo-api-dev-mcb.vercel.app';
-// const unidyClientID = 'OXpanIyzqOu4po_UmUgRNtCrQnUkwjmIB9GDsu9bsqs';
+const oidcHost = 'https://btc-echo.staging.unidy.de';
+const redirectHost = 'https://pierre-wagner-advances-pendant.trycloudflare.com';
+const unidyClientID = 'OXpanIyzqOu4po_UmUgRNtCrQnUkwjmIB9GDsu9bsqs';
 
 // const oidcHost = 'https://headset-tions-poultry-hp.trycloudflare.com';
 // const redirectHost = 'https://setting-baths-cycle-hometown.trycloudflare.com';
@@ -53,15 +59,17 @@ export { oidcHost, redirectHost, unidyClientID };
         redirectUrl: redirectHost + '/oauth/callback',
         postLogoutRedirectUri: redirectHost + '/oauth/callback',
         clientId: unidyClientID,
-        scope: 'openid',
+        scope: SCOPE,
         responseType: 'code',
         useRefreshToken: true,
-        triggerRefreshWhenIdTokenExpired: false,
+        silentRenew: true,
+        triggerRefreshWhenIdTokenExpired: true,
+        allowUnsafeReuseRefreshToken: true,
         autoUserInfo: false,
         postLoginRoute: '/home',
         forbiddenRoute: '/home',
         unauthorizedRoute: '/home',
-        logLevel: environment.production ? LogLevel.Error : LogLevel.Debug,
+        logLevel: LogLevel.Debug,
         authWellknownEndpoints: {
           issuer: oidcHost,
           authorizationEndpoint: oidcHost + '/oauth/authorize',
@@ -80,6 +88,7 @@ export { oidcHost, redirectHost, unidyClientID };
     HttpClientModule,
     RouterModule,
   ],
+  providers: [{ provide: AbstractSecurityStorage, useClass: MyStorageService }],
   exports: [AuthModule],
 })
 export class AuthConfigModule {}
