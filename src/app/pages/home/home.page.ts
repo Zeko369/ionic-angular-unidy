@@ -42,7 +42,7 @@ export class HomePage implements OnInit {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }),
+        })
       )
       .then((res) => res.ok && res.json())
       .then((res) => {
@@ -57,6 +57,7 @@ export class HomePage implements OnInit {
 
   clear() {
     window.sessionStorage.clear();
+    window.location.reload();
   }
 
   async getData() {
